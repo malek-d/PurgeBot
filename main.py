@@ -1,4 +1,4 @@
-import bot
+import bot, dotenv, os
 
 def main():
     bot.run()

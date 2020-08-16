@@ -1,5 +1,5 @@
 import os,discord
-from  config.EnvironmentCfg import getDiscordToken
+from config.EnvironmentCfg import getDiscordToken
 from discord.ext import commands
 
 client = commands.Bot(command_prefix = '$')
