@@ -23,7 +23,7 @@ class PurgeBot(commands.Cog):
         
         #Loops through messages within channel and deletes any that are posted from selected user
         counter = 0
-        async for message in ctx.message.channel.history():
+        async for message in ctx.message.channel.history(limit=None):
             if str(message.author.id) == user:
                 counter += 1
                 isDeleted = False
@@ -34,6 +34,15 @@ class PurgeBot(commands.Cog):
                     except:
                         next
         print(counter)
+
+    # enable the below for testing
+    # @commands.command()
+    # @has_permissions(manage_messages=True)
+    # async def pollute(self, ctx):
+    #     count = 0
+    #     while count != 200:
+    #         await ctx.send("test " + str(count))
+    #         count += 1
 
     @purge.error
     async def purge_error(self, ctx, error):
