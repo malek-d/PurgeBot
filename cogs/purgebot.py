@@ -36,16 +36,15 @@ class PurgeBot(commands.Cog):
         print(counter)
 
     @purge.error
-    async def purge_error(self, error, ctx):
-        print(error)
+    async def purge_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await ctx.send("You don't have permission to do that!")
         elif isinstance(error, CheckFailure):
             await ctx.send("You don't have permission to do that!")
         elif isinstance(error, BadArgument):
             await ctx.send("Could not identify target")
-        # else:
-        #     raise error
+        else:
+            raise error
    
     @commands.command()
     async def kill(self, ctx):
