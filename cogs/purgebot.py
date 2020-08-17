@@ -14,9 +14,17 @@ class PurgeBot(commands.Cog):
     @commands.command()
     @has_permissions(manage_messages=True)
     async def purge(self, ctx):
+        #Checks to see if a user has been mentioned if not asks user to input a valid user - e.g. $purge @<user>
+        try:
+            user = str(ctx.message.mentions[0].id)
+        except:
+            await ctx.send("You have not mentioned a valid user. Please mention a valid user after the purge command.")
+            return
+        
+        #Loops through messages within channel and deletes any that are posted from selected user
         counter = 0
         async for message in ctx.message.channel.history():
-            if str(message.author) == "smelkaaa#0283":
+            if str(message.author.id) == user:
                 counter += 1
                 isDeleted = False
                 while not isDeleted:
