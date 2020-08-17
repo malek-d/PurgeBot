@@ -1,4 +1,5 @@
 import discord, sys
+from discord.ext.commands import has_permissions, MissingPermissions, CheckFailure, BadArgument
 from datetime import datetime
 from discord.ext import commands
 
@@ -11,6 +12,7 @@ class PurgeBot(commands.Cog):
         print("Bot is online")
 
     @commands.command()
+    @has_permissions(manage_messages=True)
     async def purge(self, ctx):
         counter = 0
         async for message in ctx.message.channel.history():
@@ -24,6 +26,18 @@ class PurgeBot(commands.Cog):
                     except:
                         next
         print(counter)
+
+    @purge.error
+    async def purge_error(self, error, ctx):
+        print(error)
+        if isinstance(error, MissingPermissions):
+            await ctx.send("You don't have permission to do that!")
+        elif isinstance(error, CheckFailure):
+            await ctx.send("You don't have permission to do that!")
+        elif isinstance(error, BadArgument):
+            await ctx.send("Could not identify target")
+        # else:
+        #     raise error
    
     @commands.command()
     async def kill(self, ctx):
